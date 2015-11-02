@@ -5,6 +5,8 @@ class HangpersonGame
   attr_accessor :word
   attr_accessor :guesses
   attr_accessor :wrong_guesses
+  attr_reader :word_with_guesses
+  attr_reader :check_win_or_lose
   
   def guess(letter)
     raise ArgumentError if not letter =~ /^[a-zA-Z]$/
@@ -13,8 +15,12 @@ class HangpersonGame
     
     if @word.include? dletter
       @guesses += dletter
+      @word_with_guesses = @word.gsub(/[^#{@guesses}]/, '-')
+      @check_win_or_lose = :win if @word_with_guesses.eql?(@word)
     else
       @wrong_guesses += dletter
+      @chances_left -= 1 if @chances_left > 0
+      @check_win_or_lose = :lose if @chances_left <= 0
     end
     return true
   end
@@ -27,6 +33,9 @@ class HangpersonGame
     @word = word
     @guesses = ''
     @wrong_guesses = ''
+    @word_with_guesses = word.gsub(/[a-zA-Z]/, '-')
+    @chances_left = 7
+    @check_win_or_lose = :play
   end
 
   def self.get_random_word
