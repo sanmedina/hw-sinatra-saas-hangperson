@@ -28,7 +28,8 @@ class HangpersonApp < Sinatra::Base
     word = params[:word] || HangpersonGame.get_random_word # don't change this line!
     # Don't change the above line: it's necessary for autograder to work properly.
     # Your additional code goes here:
-
+    @game = new HangpersonGame.new(word)
+    erb :show
   end
   
   post '/guess' do
