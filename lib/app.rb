@@ -28,19 +28,19 @@ class HangpersonApp < Sinatra::Base
     word = params[:word] || HangpersonGame.get_random_word # don't change this line!
     # Don't change the above line: it's necessary for autograder to work properly.
     # Your additional code goes here:
-    @game = new HangpersonGame.new(word)
-    erb :show
+    @game = HangpersonGame.new(word)
+    redirect '/show'
   end
   
   post '/guess' do
     # get the guessed letter from params[:guess] (note: if user left it blank,
     #   params[:guess] will be nil)
-
+    
     # Try guessing the letter.  If it has already been guessed,
     #   display "You have already used that letter."
-
+    
     # Either way, the user should then be shown the main game screen ('show' action).
-
+    
   end
   
   get '/show' do
@@ -48,7 +48,7 @@ class HangpersonApp < Sinatra::Base
     # If player wins (word completed), do the 'win' action instead.
     # If player loses (all guesses used), do the 'lose' action instead.
     # Otherwise, show the contents of the 'show.erb' (main game view) template.
-
+    erb :show
   end
   
   get '/win' do
@@ -56,7 +56,7 @@ class HangpersonApp < Sinatra::Base
     #  If player tries to cheat, they should be shown the main game view instead.  (And
     #  you can optionally supply a "No cheating!" messaage.)
     # If they really did win, show the 'win' view template.
-    
+    erb :win
   end
   
   get '/lose' do
